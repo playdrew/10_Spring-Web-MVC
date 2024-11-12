@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ResponsePage</title>
+</head>
+<body>
+<!--모델의 메세지란 키값으로 문자열을 담았는데 이 값을 h3번 태그에 출력을 하고 싶어요 -->
+<!--지금까진 jsp 표현식으로 처리했는데 타임리프로 이젠 처리합니다.-->
+<!--th : => 타임리프 문법임을 나타냄-->
+<!--text => 문자열 형식의 값-->
+    <h3 th:text="${message}"></h3>
+</body>
+</html>
