@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HandlerMethod</title>
+</head>
+<body>
+    <h1>핸들러 메소드의 parameter 관련 어노테이션</h1>
+    <h3>1. WebRequest 객체를 이용한 요청 파라미터 전달 받기</h3>
+    <button onclick="location.href='request/regist'">파라미터 전달</button>
+<!-- 스프링은 서블릿을 내장했기 때문에 요청과 응답이 존재한다-->
+<!-- href 는 링크관련 요청이기에 get 으로 처리한다-->
+<!-- 요청 url 과 파일구조가 일치하면 뷰를 보여준다-->
+    <hr>
+    <h3>@RequestParam 어노테이션을 이용한 파라미터 전달 받기</h3>
+    <button onclick="location.href='/request/modify'">@RequestParam 이용</button>
+    <hr>
+    <h3>!!3. @ModelAttribute 를 이용한 파라미터 전달 받기 !!</h3>
+    <button onclick="location.href='/request/search'">@ModelAttribute 이용</button>
+    <!-- 하나의 값이 연이어 사용되는 것이 아님 세션은 저장고를 만들어서 다음페이지에서도 사용할수있게끔-->
+    <!-- 유지할게 로그인 아니면 없어요 필요할때 값을 담아주기만 하면 됩니다.   -->
+    <hr>
+    <h3>4-1, 4-2 . HttpSession 이용하기</h3>
+    <button onclick="location.href='/request/login'">session 에 값 담기</button>
+    <hr>
+    <h3>5. @RequestBody 를 이용하여 파라미터 전달받기</h3>
+    <button onclick="location.href='/request/body'">@RequestBody 이용</button>
+<!--레스트컨트롤러와 그냥 컨트롤러가 있는데 빈으로서 등록할때 컨트롤러라 하는데
+    나중엔 html css js 를 다른 서버로 분리 서버는 데이터를 받고 내주고가 끝인데
+    지금은 뷰기능도 해요. 나중에 등장할 개념중에 리퀘스트바디와 리스폰스바디가 있어요
+    -->
+
+</body>
+</html>
