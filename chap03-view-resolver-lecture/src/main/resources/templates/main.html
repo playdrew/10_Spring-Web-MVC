@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+<!--localhost:8080 은 index.html 만 읽게 되어있어요 그래서 그냥 이것만 있으면 에러-->
+    <h1>뷰 리졸버를 이용한 뷰 페이지 렌더링</h1>
+    <hr>
+    <h3>문자열로 뷰 이름 반환하기</h3>
+    <button onclick="location.href='string'">문자열로 view 반환</button>
+    <hr>
+    <h3>문자열로 redirect 하기</h3>
+    <button onclick="location.href='string-redirect'">문자열로 redirect</button>
+    <hr>
+    <h3>문자열로 뷰 이름 반환하면서 리다이렉트 시 값 유지하기</h3>
+    <button onclick="location.href='string-redirect-attr'">리다이렉트시 값 유지</button>
+    <script>
+        const flashMessage = `[[${flashMessage}]]`;
+        console.log(flashMessage);
+        if(flashMessage){
+            alert(flashMessage);
+        }
+        // 정말로 등록하겠습니까 ? 등록완료 창등에서 사용
+    </script>
+    <hr>
+    <h3>ModelAndView 로 뷰이름 지정해서 반환하기</h3>
+    <button onclick="location.href='modelandview'">ModelAndView 객체 사용해서 반환</button>
+    <hr>
+    <h3>ModelAndView 로 리다이랙트 && 값 전달</h3>
+    <button onclick="location.href='modelandview-redirect-attr'">ModelAndView 로 redirect && attr</button>
+    <script>
+    const flashMessage2 = `[[${flashMessage2}]]`;
+    console.log(flashMessage2);
+    if(flashMessage2){
+        alert(flashMessage2);
+    }
+    </script>
+
+</body>
+</html>
+

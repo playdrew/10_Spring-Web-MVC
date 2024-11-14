@@ -127,7 +127,7 @@ public class RequestController {
     * */
     // requestParam 을 Map 형식으로 바꿨으면 매개변수명을 비교적 신경안써도 된다.
     @PostMapping("modifyAll")
-    public String modfiyALL(Model model, @RequestParam Map<String,String> parameters){
+    public String modifyAll(Model model, @RequestParam Map<String,String> parameters){
 
         String menuName = parameters.get("modifyName2");
         int menuPrice = Integer.parseInt(parameters.get("modifyPrice2"));
