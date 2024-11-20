@@ -74,4 +74,18 @@ public class LectureController {
         mv.setViewName("lecture/etc");
         return mv;
     }
+
+    @GetMapping("fragment")
+    public ModelAndView fragment(ModelAndView mv){
+
+        mv.addObject("test","value");
+        mv.addObject("test2","value2");
+
+
+        // view 의 이름을 설정 prefix resources/templates 이 붙고 뒤에는 .html 이 붙는다.
+        // 이런 뷰네임을 설정했다는 것은 해당 디렉토리에 이러한 파일을 만들어라는 것
+        mv.setViewName("lecture/fragment");
+
+        return mv;
+    }
 }

@@ -1,0 +1,66 @@
+<!--
+
+    스태틱은 서버에서 넘긴 데이터를 받지 못해요 템플릿에 커먼이라는 공유목적의 디렉토리를 작성해요
+
+    페이지를 여러개 만들건데 바뀌지 않는 url 이 많을 꺼에요
+    예를 들어 프로젝트명이담긴 header 다른 페이지에서도 header 영역은 동일할 꺼에요
+    그럼 헤더를 7번 쓸거에요 이렇게 작성하면 반복해야해요.
+    그래서 프래그먼트란 개념이 뭐냐면 이 프로젝트명이란 것을 하나로 정의를 해놓아요
+    그리고 필요한 부분에서 호출하는 느낌으로 자바의 메소드처럼 반복되는 코드를 묶어 놓았다해요.
+    그래서 조각 프래그먼트라고 해요 진정헤더는 하나의 html 에 두고 필요한 곳에서 호출만 하는 것이에요
+-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <style>
+        .header{
+            color:red;
+        }
+        .footer{
+            color:blue;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        comment.
+            th:replace 는 해당 영역에 있는 코드를 대체하는
+            fragment 를 호출하는 문법이다.
+            기존의 코드를 지우고 불러운  Fragment 로 대체한다.
+
+            해당파일이 존재하는 디렉토리와 프레그먼트의 이름을 ~{::}에 작성
+            기존에 가지고 있는 <h1>Header 영역</h1> 은 없애버려요
+    -->
+    <header th:replace="~{/common/header :: headerFragment}">
+        <h1>Header 영역</h1>
+    </header>
+    <!--
+        comment.
+            Fragment 에 우리가 서버에서 받은 값을 전달하여
+            공용으로 사용할 태그를 동적으로 변환할 수 있다.
+    -->
+    <!--
+        서버에서 받아온 test 와 test2 의 값을 전달 받고 있어요
+    -->
+    <aside th:replace="~{/common/aside :: asideFragment(${test},${test2})}"></aside>
+    <main>
+        <article>
+            <section>
+                <h1>메인 내용 작성 영역</h1>
+            </section>
+        </article>
+    </main>
+    <!--
+        comment.
+            th:insert 문법은 해당 영역에 삽입하고자 하는 Fragment 를 삽입하는
+            문법으로 블록내에 정의되어 있는 내용에 불러온 내용을 추가(삽입)한다.
+            불러오는 블럭을 기준으로 내부의 값을 제거하고 불러온 Fragment 로 삽입
+    -->
+    <footer th:insert="~{/common/footer :: footerFragment}">
+        <h2>Footer 영역</h2>
+    </footer>
+</body>
+</html>
