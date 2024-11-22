@@ -1,6 +1,7 @@
 package com.ohgiraffers.crud.menu.model.dao;
 
 import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
+import com.ohgiraffers.crud.menu.model.dto.MenuAndCategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -23,5 +24,9 @@ public interface MenuMapper {
     // 데이터베이스의 dml 에 들어왔어요
     void registNewMenu(MenuDTO newMenu);
 
-    List<MenuDTO> findMenu(String menuName);
+    List<MenuDTO> findMenuByName(String menuName);
+
+    List<MenuAndCategoryDTO> findAllMenuAndCategory();
+
+    void deleteByCode(int menuCode);
 }

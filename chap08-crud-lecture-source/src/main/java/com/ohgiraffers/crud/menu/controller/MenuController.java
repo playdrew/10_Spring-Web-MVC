@@ -1,8 +1,11 @@
 package com.ohgiraffers.crud.menu.controller;
 
 import com.ohgiraffers.crud.menu.model.dto.CategoryDTO;
+import com.ohgiraffers.crud.menu.model.dto.MenuAndCategoryDTO;
 import com.ohgiraffers.crud.menu.model.dto.MenuDTO;
 import com.ohgiraffers.crud.menu.model.service.MenuService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -10,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,6 +21,15 @@ import java.util.Locale;
 @Controller
 @RequestMapping("/menu/*")
 public class MenuController {
+
+    // 로깅이란 우리가 들어온 흔적 남김
+    /*comment. Logging
+    *          어플리케이션이 실행 중 발생하는 이벤트(정보,경고,오류)등을
+    *          기록하는 과정.
+    *          이는 사용자 화면을 위해 만드는 기능이 아닌, 개발자가 어플리케이션의
+    *          상태를 추척하고, 모니터링 하는 데 사용할 수 있다.*/
+    // 로거는 인터페이스이 므로 인스턴스 만들수 없음. LogManager 로 만듬
+    private static final Logger logger = LogManager.getLogger(MenuController.class);
     
     private final MenuService menuService;
 
@@ -86,6 +97,17 @@ public class MenuController {
         *           담기 위해 작성하는 어노태이션
         *           RedirectAttributes : 리다이렉트 시 저장할 값이 있으면 사용하는 객체
         * */
+
+        /* comment.
+        *       TRACE : 상세한 디버깅 정보(매우 세밀한 로그)
+        *       DEBUG : 개발 중 디버깅용 정보
+        *       INFO : 일반적인 실행 정보
+        *       WARN : 잠재적인 문제 경고
+        *       ERROR : 실행 중 발생한 오류
+        * */
+        logger.info("Locale : {}", locale);
+        logger.info("newMenu : {} ", newMenu);
+
         // 해당 구문을 수행했을때 db 인설트다되었다 한다음에 alert 창으로 알려주기
         menuService.registMenu(newMenu);
         // addFlashAttribute 는 해당하는 키값으로 데이터를 쓸수있다는 것입니다.
@@ -94,21 +116,54 @@ public class MenuController {
         return "redirect:/menu/list";
     }
 
-    @GetMapping("find")
+    @GetMapping("findByName")
     public String findPage() {
-        return "menu/find"; // 검색 폼 뷰 반환
+        return "/menu/findByName";
     }
 
     // POST 요청: 폼 제출 후 메뉴 검색 결과 표시
-    @PostMapping("find")
+    @PostMapping("findByName")
     public String findSelectedMenu(Model model, @RequestParam("menuName") String menuName) {
-        // 메뉴 서비스 호출하여 이름으로 메뉴 목록 검색
-        List<MenuDTO> findMenu = menuService.findMenu(menuName);
 
-        // 검색된 메뉴 목록을 모델에 추가
-        model.addAttribute("findMenu", findMenu);
-
-        // 검색 결과를 출력할 뷰로 이동
+        List<MenuDTO> findMenuByName = menuService.findMenuByName(menuName);
+        model.addAttribute("findMenuByName", findMenuByName);
         return "menu/findTable";
     }
+
+    // 조인 리스트를 핸들러할 핸들러메소드 생성
+    // 값을 담기 위한 모델객체 생성
+    @GetMapping("join/list")
+    public String menuAndCategoryList(Model model){
+
+        List<MenuAndCategoryDTO> joinList = menuService.findAllMenuAndCategory();
+
+        model.addAttribute("joinList",joinList);
+
+        return "menu/join";
+    }
+
+    /* comment. DELETE 구문 생성
+    *           인덱스 페이지에서 delete 버튼 누르면
+    *           메뉴 코드를 입력할 수 있는 input 태그와
+    *           전송 버튼을 보여주는 view 페이지로 이동
+    *           -
+    *           이후 값 전달 받아 삭제하는 기능 생성
+    *           전송 버튼 누르면 menu/list 페이지로 redirect 진행
+    *           리다이랙트 시 사용자에게 alert 창으로
+    *           "몇 번 메뉴 삭제 완료되었습니다." 메세지 출력
+    * */
+    @GetMapping("deleteByCode")
+    public String deleteByCodePage(){
+        return "menu/deleteByCode";
+    }
+
+    @PostMapping
+    public String deleteByCode(int menuCode, RedirectAttributes rttr,Locale locale,@ModelAttribute MenuDTO deleteMenuDTOByCode){
+
+        rttr.addFlashAttribute("successMessage", messageSource.getMessage("delete",new Object[]{deleteMenuDTOByCode.getName()},locale));
+        menuService.deleteByCode(menuCode);
+        return "redirect:/menu/list";
+    }
+
+    // 뷰페이지에선 절대경로 / 붙여주기 리턴에선 상대경로
 }

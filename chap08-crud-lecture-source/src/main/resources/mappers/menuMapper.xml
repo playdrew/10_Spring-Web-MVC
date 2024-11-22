@@ -59,7 +59,7 @@
             #{orderableStatus}
         )
     </insert>
-    <select id="findMenu" resultMap="menuResultMap">
+    <select id="findMenuByName" resultMap="menuResultMap">
         SELECT
             MENU_CODE,
             MENU_NAME,
@@ -71,5 +71,40 @@
         WHERE
             MENU_NAME LIKE CONCAT('%', #{menuName}, '%')
     </select>
+
+<!--association 1:1 관계 collection 은 1대 다관계입니다.-->
+    <resultMap id="joinResultMap" type="com.ohgiraffers.crud.menu.model.dto.MenuAndCategoryDTO">
+        <id property="code" column="menu_code"/>
+        <result property="name" column="menu_name"/>
+        <result property="price" column="menu_price"/>
+        <result property="orderableStatus" column="orderable_status"/>
+        <association property="categoryDTO" javaType="com.ohgiraffers.crud.menu.model.dto.CategoryDTO">
+            <id property="code" column="category_code"/>
+            <result property="name" column="category_name"/>
+            <result property="refCategoryCode" column="ref_category_code"/>
+        </association>
+    </resultMap>
+
+<!--파라미터타입은 매퍼에서 값을 매개변수로 전달하면 값을 받을 준비를 하는 것입니다.-->
+    <select id="findAllMenuAndCategory" resultMap="joinResultMap">
+        select
+            a.menu_code,
+            a.menu_name,
+            a.menu_price,
+            a.orderable_status,
+            b.*
+        from
+            tbl_menu a
+        join
+            tbl_category b on (a.category_code = b.category_code)
+        where
+            a.orderable_status='Y'
+    </select>
+
+    <delete id="deleteByCode" parameterType="int">
+        DELETE
+        FROM TBL_MENU
+        WHERE MENU_CODE = #{menuCode}
+    </delete>
 
 </mapper>
