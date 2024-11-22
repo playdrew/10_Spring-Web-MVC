@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+<h1>Search Results</h1>
+
+<!-- 검색 페이지로 돌아가기 링크 -->
+<a href="/find">Back to Search</a>
+
+<!-- 검색된 메뉴가 없다면 "No menus found." 메시지 출력 -->
+<div th:if="${#lists.isEmpty(findMenu)}">
+    <p>No menus found.</p>
+</div>
+
+<!-- 검색된 메뉴가 있을 때만 테이블 출력 -->
+<table border="1" th:if="${!#lists.isEmpty(findMenu)}">
+    <thead>
+    <tr>
+        <th>Menu Name</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="menu : ${findMenu}">
+        <td th:text="${menu.name}">Menu Name</td>
+        <td th:text="${menu.price}">Price</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 이 파일은 Menu Mapper Interface 와 소통을 해야해요-->
+<mapper namespace="com.ohgiraffers.crud.menu.model.dao.MenuMapper">
+
+    <resultMap id="menuResultMap" type="com.ohgiraffers.crud.menu.model.dto.MenuDTO">
+        <id property="code" column="menu_code"/>
+        <result property="name" column="menu_name"/>
+        <result property="price" column="menu_price"/>
+        <result property="categoryCode" column="category_code"/>
+        <result property="orderableStatus" column="orderable_status"/>
+    </resultMap>
+
+<!-- type 에 별칭 작성   -->
+    <resultMap id="categoryResultMap" type="com.ohgiraffers.crud.menu.model.dto.CategoryDTO">
+        <id property="code" column="category_code"/>
+        <result property="name" column="category_name"/>
+        <result property="refCategoryCode" column="ref_category_code"/>
+    </resultMap>
+
+    <!-- 이 쿼리문은 데이터베이스에 조회한 것인데 자바 객체에 집어넣을 거에요. 이것과 dto 를 매칭을 시켜야 하기에 resultMap 생성-->
+    <select id="findAllMenus" resultMap="menuResultMap">
+        SELECT
+            MENU_CODE,
+            MENU_NAME,
+            MENU_PRICE,
+            CATEGORY_CODE,
+            ORDERABLE_STATUS
+        FROM
+            TBL_MENU
+        WHERE
+            ORDERABLE_STATUS = 'Y'
+        ORDER BY
+            MENU_CODE
+    </select>
+    <select id="findAllCategory" resultMap="categoryResultMap">
+        select
+            *
+        from
+            tbl_category
+    </select>
+
+    <insert id="registNewMenu" parameterType="com.ohgiraffers.crud.menu.model.dto.MenuDTO">
+        insert into tbl_menu
+        (
+            menu_name,
+            menu_price,
+            category_code,
+            orderable_status
+        )
+        values
+        (
+            #{name},
+            #{price},
+            #{categoryCode},
+            #{orderableStatus}
+        )
+    </insert>
+    <select id="findMenu" resultMap="menuResultMap">
+        SELECT
+            MENU_CODE,
+            MENU_NAME,
+            MENU_PRICE,
+            CATEGORY_CODE,
+            ORDERABLE_STATUS
+        FROM
+            TBL_MENU
+        WHERE
+            MENU_NAME LIKE CONCAT('%', #{menuName}, '%')
+    </select>
+
+</mapper>

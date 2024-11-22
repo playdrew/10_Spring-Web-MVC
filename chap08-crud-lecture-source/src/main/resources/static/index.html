@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+    <h1 align="center">🎁Ohgiraffers Restaurant🎁</h1>
+    <!--
+        "location.href='/menu/list'" 처리할 핸들러 메소드 생성 controller 에 MenuController
+        "location.href='menu/regist'"처리할 핸들러 메소드 생성 controller 에 MenuController
+    -->
+    <button onclick="location.href='/menu/list'">전체 메뉴 조회</button>
+    <!--
+        Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+        mybatis 설정을 했으면 어떤 DB를 종속시킬건지 설정을 해주어야 합니다.
+    -->
+    <button onclick="location.href='menu/regist'">신규 메뉴 등록</button>
+    <button onclick="location.href='menu/find'">선택 메뉴 조회</button>
+</body>
+</html>

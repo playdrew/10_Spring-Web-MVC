@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const message = `[[${successMessage}]]`;
+        if(message){
+            alert(message);
+        }
+    </script>
+    <table border="1">
+        <tr>
+            <th>메뉴번호</th>
+            <th>메뉴이름</th>
+            <th>메뉴가격</th>
+            <th>카테고리코드</th>
+            <th>판매상태</th>
+        </tr>
+        <!-- tr과 td를 일일히 만들면 굉장히 힘들거에요 그래서 th:each -->
+        <tr th:each="menu:${menuList}">
+            <td th:text="${menu.code}"></td>
+            <td th:text="${menu.name}"></td>
+            <td th:text="${menu.price}"></td>
+            <td th:text="${menu.categoryCode}"></td>
+            <td th:text="${menu.orderableStatus}"></td>
+        </tr>
+    </table>
+</body>
+</html>
