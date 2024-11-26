@@ -14,6 +14,7 @@
     </script>
     <table border="1">
         <tr>
+            <th><input type="checkbox" id="checkAll" /></th>
             <th>메뉴번호</th>
             <th>메뉴이름</th>
             <th>메뉴가격</th>
@@ -22,12 +23,36 @@
         </tr>
         <!-- tr과 td를 일일히 만들면 굉장히 힘들거에요 그래서 th:each -->
         <tr th:each="menu:${menuList}">
+            <td><input type="checkbox" name="selectedMenu" th:value="${menu.code}" /></td>
             <td th:text="${menu.code}"></td>
-            <td th:text="${menu.name}"></td>
-            <td th:text="${menu.price}"></td>
-            <td th:text="${menu.categoryCode}"></td>
-            <td th:text="${menu.orderableStatus}"></td>
+            <td th:text="${menu.name}" onclick="editCell(this)"></td>
+            <td th:text="${menu.price}" onclick="editCell(this)"></td>
+            <td th:text="${menu.categoryCode}" onclick="editCell(this)"></td>
+            <td th:text="${menu.orderableStatus}" onclick="editCell(this)"></td>
         </tr>
     </table>
+    <script>
+        document.getElementById("checkAll").onclick = function() {
+            let checkboxes = document.getElementsByName("selectedMenu");
+            for (let checkbox of checkboxes) {
+                checkbox.checked = this.checked;
+            }
+        };
+
+        function editCell(cell) {
+            const currentText = cell.innerText;
+            const input = document.createElement("input");
+            input.type = "text";
+            input.value = currentText;
+
+            input.onblur = function() {
+                cell.innerText = this.value || currentText; // 빈 값인 경우 기존 값으로 복원
+            };
+
+            cell.innerHTML = ""; // 셀의 내용을 비우고
+            cell.appendChild(input); // 입력창 추가
+            input.focus(); // 입력창에 포커스
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>전체 직원 조회</title>
+</head>
+<body>
+<form action="/employee/delete" method="post">
+    <table>
+        <thead>
+        <tr>
+            <th><input type="checkbox" id="checkAll" /></th>
+            <th>직원 ID</th>
+            <th>직원 이름</th>
+            <th>직원 이메일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employees}">
+            <td><input type="checkbox" name="selectedEmployees" th:value="${employee.id}" /></td>
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.email}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button type="submit">선택한 직원 삭제</button>
+</form>
+
+<script>
+    document.getElementById("checkAll").onclick = function() {
+        let checkboxes = document.getElementsByName("selectedEmployees");
+        for (let checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    };
+</script>
+</body>
+</html>

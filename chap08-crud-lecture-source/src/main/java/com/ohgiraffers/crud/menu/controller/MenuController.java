@@ -163,7 +163,8 @@ public class MenuController {
         rttr.addFlashAttribute("successMessage", messageSource.getMessage("delete",new Object[]{deleteMenuDTOByCode.getName()},locale));
         menuService.deleteByCode(menuCode);
         return "redirect:/menu/list";
+
+        // 뷰페이지에선 절대경로 / 붙여주기 리턴에선 상대경로
     }
 
-    // 뷰페이지에선 절대경로 / 붙여주기 리턴에선 상대경로
 }
